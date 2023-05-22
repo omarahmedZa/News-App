@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'demo.dart';
 
 class NewsScreen extends StatelessWidget
 {
@@ -19,12 +20,12 @@ class NewsScreen extends StatelessWidget
         actions: const [
           Padding(
             padding: EdgeInsets.only(
-              right: 24.0
+                right: 24.0
             ),
             child: Icon(
-            Icons.notifications,
+              Icons.notifications,
               color: Colors.black,
-        ),
+            ),
           ),
         ],
         backgroundColor: Colors.white,
@@ -41,21 +42,24 @@ class NewsScreen extends StatelessWidget
               const SizedBox(
                 height: 16.0,
               ),
-              TextFormField(
-                keyboardType: TextInputType.text,
-               decoration: const InputDecoration(
-                 labelText: 'Search',
-                 prefixIcon: Icon(
-                   Icons.search,
-                 ),
-                 suffixIcon: Image(
-                     image: AssetImage(
-                       'icons/Icon.png'
-                     ),
-                 ),
-                 border: OutlineInputBorder(),
-               ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(child: Container()),
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      // Perform search action
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>demo()));
+                      print('hi');
+                    },
+                  ),
+
+                ],
               ),
+
+
               const SizedBox(
                 height: 16.0,
               ),
@@ -109,9 +113,9 @@ class NewsScreen extends StatelessWidget
                 child: Column(
                   children: [
                     const Image(
-                        image: AssetImage(
+                      image: AssetImage(
                           'images/image 1.png'
-                        ),
+                      ),
                     ),
                     Container(
                       width: double.infinity,
@@ -138,7 +142,7 @@ class NewsScreen extends StatelessWidget
                           Text(
                             'Russian warship: Moskva sinks in Black Sea',
                             style: TextStyle(
-                              fontSize: 20
+                                fontSize: 20
                             ),
                           ),
                         ],
@@ -157,15 +161,15 @@ class NewsScreen extends StatelessWidget
                             width: 20.0,
                             child: CircleAvatar(
                               backgroundImage: AssetImage(
-                                'images/Ellipse.png'
+                                  'images/Ellipse.png'
                               ),
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.only(
-                              start: 4.0,
-                              end: 12.0,
-                              top: 1.0
+                                start: 4.0,
+                                end: 12.0,
+                                top: 1.0
                             ),
                             child: Text(
                               'BBC News',
@@ -186,8 +190,8 @@ class NewsScreen extends StatelessWidget
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.only(
-                              top: 6.0,
-                              start: 4.0
+                                top: 6.0,
+                                start: 4.0
                             ),
                             child: Text(
                               '4h ago',
@@ -233,9 +237,9 @@ class NewsScreen extends StatelessWidget
 
                             },
                             style: const ButtonStyle(
-                              padding: MaterialStatePropertyAll<EdgeInsetsDirectional>(
-                                EdgeInsetsDirectional.all(0.0),
-                              )
+                                padding: MaterialStatePropertyAll<EdgeInsetsDirectional>(
+                                  EdgeInsetsDirectional.all(0.0),
+                                )
                             ),
                             child: const Text(
                                 'See all'
@@ -257,11 +261,11 @@ class NewsScreen extends StatelessWidget
                 child: ListView.separated(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => NewsType(),
-                    separatorBuilder: (context, index) => const SizedBox(
-                      width: 10.0,
-                    ),
-                    itemCount: 20,
+                  itemBuilder: (context, index) => NewsType(),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    width: 10.0,
+                  ),
+                  itemCount: 20,
                 ),
               ),
               const SizedBox(
