@@ -47,7 +47,7 @@ required TextEditingController controller,
   Function(String)? onSaved,
   Function()? onSuffix,
   String? Function(String?)? validator,
-  double radius = 4,
+  double radius = 0,
   Color? borderColor,
 }) => TextFormField(
   controller: controller,
@@ -71,9 +71,9 @@ labelStyle: Theme.of(context).textTheme.bodyText2,
 suffixIcon: suffix == null ? null : IconButton(icon:Icon(suffix,color: ThemeCubit.get(context).isDark ? appLightColor : appDarkColor,),
   onPressed: onSuffix,),
   enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(radius),
+      borderRadius: BorderRadius.circular(20),
       borderSide: BorderSide(
-          color: borderColor ?? mainColor,
+          color: Colors.black54,
           width: 1.5
       ),
   ),
@@ -151,12 +151,12 @@ Widget defaultButton ({
   onPressed: function,
   height: height,
   minWidth: width,
-  color: color ?? mainColor,
+  color: Colors.black54,
   shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(radius),
+    borderRadius: BorderRadius.circular(20),
     side: BorderSide(
       width: borderWidth,
-      color: borderColor ?? Colors.black
+      color: Colors.black54
     ),
   ),
 );
@@ -178,7 +178,7 @@ Widget defultIconButton ({
   onPressed: function,
   height: height,
   minWidth: width,
-  color: color ?? mainColor,
+  color: Colors.amber,
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(radius),
     side: BorderSide(
@@ -274,7 +274,7 @@ Widget buildNetworkImage({
     imageUrl: imageUrl,
     imageBuilder: (context, image) =>
         Container(
-          height: height,
+          height: 180,
           width: width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radius),
@@ -322,7 +322,7 @@ Widget buildNetworkProfileImage({
     ),
     errorWidget: (context, text, _) =>
         Container(
-            height: radius,
+            height: 28,
             width: radius,
             decoration: BoxDecoration(
               shape: BoxShape.circle
@@ -474,12 +474,33 @@ Widget buildPosts({
                       icon: Icon(FontAwesomeIcons.grip,size: 20,color: ThemeCubit.get(context).isDark ? Colors.grey[300] : Colors.black,)),
                 ],
               ),
+              if(model.image.isNotEmpty)
+                SizedBox(height: 4.0,),
+                InteractiveViewer(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.lerp(BorderRadius.circular(30),BorderRadius.circular(30), 3),
+                      child: buildNetworkImage(
+                        imageUrl: model.image,
+                      ),
+                    ),
+                ),
               if(model.title.isNotEmpty)
-               SizedBox(height: 15.0,),
+                SizedBox(height: 15.0,),
               Text(
                 model.title,
                 textAlign: model.title.contains(RegExp(r'[\u0600-\u06FF]')) ? TextAlign.right :TextAlign.left,
                 textDirection: model.title.contains(RegExp(r'[\u0600-\u06FF]')) ? TextDirection.rtl :TextDirection.ltr,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .subtitle1!.copyWith(fontSize: 24),
+              ),
+              if(model.description.isNotEmpty)
+                SizedBox(height: 15.0,),
+              Text(
+                model.description,
+                textAlign: model.description.contains(RegExp(r'[\u0600-\u06FF]')) ? TextAlign.right :TextAlign.left,
+                textDirection: model.description.contains(RegExp(r'[\u0600-\u06FF]')) ? TextDirection.rtl :TextDirection.ltr,
                 style: Theme
                     .of(context)
                     .textTheme
@@ -489,10 +510,6 @@ Widget buildPosts({
           ),
         ),
         //SizedBox(height: 5.0,),
-        if(model.image.isNotEmpty)
-          InteractiveViewer(
-              child: buildNetworkImage(imageUrl: model.image)
-          ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

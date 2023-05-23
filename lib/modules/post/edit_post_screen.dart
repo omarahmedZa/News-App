@@ -14,6 +14,7 @@ class EditPostScreen extends StatelessWidget {
   final PostModel model;
 
   var editPostController = TextEditingController();
+  var editPostContent = TextEditingController();
 
   EditPostScreen(this.model);
   @override
@@ -21,6 +22,7 @@ class EditPostScreen extends StatelessWidget {
     if(editPostController.text.isEmpty)
     {
       editPostController.text = model.title;
+      editPostContent.text = model.description;
       PostCubit.get(context).editImage = model.image;
     }
     return BlocConsumer<PostCubit,PostStates>(
@@ -48,6 +50,7 @@ class EditPostScreen extends StatelessWidget {
                             userModel: AppCubit.get(context).userModel,
                             post: model,
                             text: editPostController.text
+
                         );
                         Navigator.of(context).pop();
                       }
@@ -57,6 +60,7 @@ class EditPostScreen extends StatelessWidget {
                               userModel: AppCubit.get(context).userModel,
                               post: model,
                               text: editPostController.text,
+                              content: editPostContent.text,
                               image: PostCubit.get(context).editImage
                           );
                           Navigator.of(context).pop();
@@ -86,23 +90,46 @@ class EditPostScreen extends StatelessWidget {
                     constraints: BoxConstraints(
                         maxWidth: 307.0
                     ),
-                    child: TextFormField(
-                      controller: editPostController,
-                      minLines: 1,
-                      maxLines: 50,
-                      cursorHeight: 20.0,
-                      textDirection: editPostController.text.contains(RegExp(r'[\u0600-\u06FF]')) ? TextDirection.rtl :TextDirection.ltr,
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 17),
-                      decoration: InputDecoration(
-                          hintText: 'Write a post ...',
-                          border: InputBorder.none
-                      ),
-                      onChanged: (value)
-                      {
-                        if(value.length<=2)
-                          PostCubit.get(context).typeArabic();
-                      },
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: editPostController,
+                          minLines: 1,
+                          maxLines: 50,
+                          cursorHeight: 20.0,
+                          textDirection: editPostController.text.contains(RegExp(r'[\u0600-\u06FF]')) ? TextDirection.rtl :TextDirection.ltr,
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 17),
+                          decoration: InputDecoration(
+                              hintText: 'Write a post ...',
+                              border: InputBorder.none
+                          ),
+                          onChanged: (value)
+                          {
+                            if(value.length<=2)
+                              PostCubit.get(context).typeArabic();
+                          },
+                        ),
+                        SizedBox(width: 10.0,),
+                        TextFormField(
+                          controller: editPostContent,
+                          minLines: 1,
+                          maxLines: 50,
+                          cursorHeight: 20.0,
+                          textDirection: editPostContent.text.contains(RegExp(r'[\u0600-\u06FF]')) ? TextDirection.rtl :TextDirection.ltr,
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 17),
+                          decoration: InputDecoration(
+                              hintText: 'Write a post ...',
+                              border: InputBorder.none
+                          ),
+                          onChanged: (value)
+                          {
+                            if(value.length<=2)
+                              PostCubit.get(context).typeArabic();
+                          },
+                        ),
+                      ],
                     ),
+
                   ),
                   if(PostCubit.get(context).imageFile.path.isNotEmpty)
                     Stack(

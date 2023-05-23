@@ -52,28 +52,31 @@ class RegisterScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 310.0,
+                      height: 100.0,
                       width: double.infinity,
-                      alignment: AlignmentDirectional.bottomStart,
+                      alignment: AlignmentDirectional.center,
                       padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 20.0),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.vertical(
-                            bottom: Radius.elliptical(MediaQuery.of(context).size.width, 30),
+                            //bottom: Radius.elliptical(MediaQuery.of(context).size.width, 30),
                           ),
-                          gradient: LinearGradient(
-                              colors:
-                              [
-                                ThemeCubit.get(context).isDark ? appDarkColor : appLightColor,
-                                ThemeCubit.get(context).isDark ? appLightColor.withOpacity(0.7) :appDarkColor.withOpacity(0.2),
-                              ]
-                          )
+                          // gradient: LinearGradient(
+                          //     colors:
+                          //     [
+                          //       ThemeCubit.get(context).isDark ? appDarkColor : appLightColor,
+                          //       ThemeCubit.get(context).isDark ? appLightColor.withOpacity(0.7) :appDarkColor.withOpacity(0.2),
+                          //     ]
+                          // )
                       ),
                       child: Text(
                         'Friends',
-                        style: GoogleFonts.lobster().copyWith(
-                            fontSize: 50,
-                            color: silverColor
+                        style: TextStyle(
+                          fontSize: 30,
                         ),
+                        // style: GoogleFonts.lobster().copyWith(
+                        //     fontSize: 50,
+                        //     color: silverColor
+                        // ),
                       ),
                     ),
                     Padding(
@@ -82,7 +85,7 @@ class RegisterScreen extends StatelessWidget {
                         key: formKey,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(height: 30,),
                             Text(

@@ -124,6 +124,7 @@ class PostCubit extends Cubit<PostStates>
       {
         required String text,
         required String time,
+        required String content,
         required UserModel userModel,
       })
   {
@@ -137,7 +138,7 @@ class PostCubit extends Cubit<PostStates>
       imageFile = File('');
       value.ref.getDownloadURL().then((value)
       {
-        createPost(text: text, time: time,image: value, userModel: userModel);
+        createPost(text: text, time: time,image: value, userModel: userModel, content: content);
       }).catchError((error){
         emit(CreatePostErrorState());
       });
@@ -152,11 +153,12 @@ class PostCubit extends Cubit<PostStates>
   void createPost({
     required UserModel userModel,
     required String text,
+    required String content,
     required String time,
-    String image =''
+    String image = '',
   })
   {
-    PostModel post = PostModel(userModel.name, userModel.profileImage, time, text, uId, "",image);
+    PostModel post = PostModel(userModel.name, userModel.profileImage, time, text, uId, content,image);
 
     emit(CreatePostLoadingState());
 
@@ -208,10 +210,11 @@ class PostCubit extends Cubit<PostStates>
     String? profileImage,
     String? profileName,
     String? text,
+    String? content,
   })
   {
     emit(PostUpdateLoadingState());
-    PostModel model = PostModel(profileName ?? userModel.name, profileImage ?? userModel.profileImage,post.postTime,text ?? post.title, userModel.uId,image ?? post.image,"");
+    PostModel model = PostModel(profileName ?? userModel.name, profileImage ?? userModel.profileImage,post.postTime,text ?? post.title, userModel.uId,content ?? post.description,image ?? post.image);
 
     FirebaseFirestore.instance.collection('posts').doc(post.postId).update(model.toMap())
         .then((value)

@@ -14,6 +14,7 @@ import '../../shared/style/colors.dart';
 class PostScreen extends StatelessWidget {
 
   var postController = TextEditingController();
+  var postContent = TextEditingController();
   bool dir= false;
   String temp = '';
   @override
@@ -43,6 +44,7 @@ class PostScreen extends StatelessWidget {
                       PostCubit.get(context).uploadPostImage(
                         userModel: model,
                         text: postController.text,
+                        content: postContent.text,
                         time: DateTime.now().toIso8601String(),
                       );
                       if(state is !CreatePostLoadingState)
@@ -55,6 +57,7 @@ class PostScreen extends StatelessWidget {
                         PostCubit.get(context).createPost(
                           userModel: model,
                           text: postController.text,
+                          content: postContent.text,
                           time: DateTime.now().toIso8601String(),
                         );
                         if(state is !CreatePostLoadingState)
@@ -119,26 +122,51 @@ class PostScreen extends StatelessWidget {
                     constraints: BoxConstraints(
                         maxWidth: 307.0
                     ),
-                    child: TextFormField(
-                      controller: postController,
-                      minLines: 1,
-                      maxLines: 50,
-                      cursorHeight: 20.0,
-                      cursorColor: Colors.blueGrey,
-                      textDirection: postController.text.contains(RegExp(r'[\u0600-\u06FF]')) ? TextDirection.rtl :TextDirection.ltr,
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 17),
-                      decoration: InputDecoration(
-                        focusColor: Colors.grey,
-                        border : InputBorder.none,
-                        labelStyle: Theme.of(context).textTheme.subtitle1!.copyWith(color: Colors.grey),
-                        hintText: 'Write a post ...',
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: postController,
+                          minLines: 1,
+                          maxLines: 50,
+                          cursorHeight: 20.0,
+                          cursorColor: Colors.blueGrey,
+                          textDirection: postController.text.contains(RegExp(r'[\u0600-\u06FF]')) ? TextDirection.rtl :TextDirection.ltr,
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 17),
+                          decoration: InputDecoration(
+                            focusColor: Colors.grey,
+                            border : InputBorder.none,
+                            labelStyle: Theme.of(context).textTheme.subtitle1!.copyWith(color: Colors.grey),
+                            hintText: 'Write a post ...',
 
-                      ),
-                      onChanged: (value)
-                      {
-                        if(value.length<2 || value.length >= 50)
-                          PostCubit.get(context).typeArabic();
-                      },
+                          ),
+                          onChanged: (value)
+                          {
+                            if(value.length<2 || value.length >= 50)
+                              PostCubit.get(context).typeArabic();
+                          },
+                        ),
+                        TextFormField(
+                          controller: postContent,
+                          minLines: 1,
+                          maxLines: 50,
+                          cursorHeight: 20.0,
+                          cursorColor: Colors.blueGrey,
+                          textDirection: postContent.text.contains(RegExp(r'[\u0600-\u06FF]')) ? TextDirection.rtl :TextDirection.ltr,
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 17),
+                          decoration: InputDecoration(
+                            focusColor: Colors.grey,
+                            border : InputBorder.none,
+                            labelStyle: Theme.of(context).textTheme.subtitle1!.copyWith(color: Colors.grey),
+                            hintText: 'Content ...',
+
+                          ),
+                          onChanged: (value)
+                          {
+                            if(value.length<2 || value.length >= 50)
+                              PostCubit.get(context).typeArabic();
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   if(PostCubit.get(context).imageFile.path.isNotEmpty)

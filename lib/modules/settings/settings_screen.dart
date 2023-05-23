@@ -96,36 +96,6 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(height: 5.0,),
                 myDivider(context),
                 SizedBox(height: 10.0,),
-                Row(
-                  children:
-                  [
-                    Text('Rate our App',
-                        style: Theme.of(context).textTheme.bodyText2
-                    ),
-                    SizedBox(width: 5.0,),
-                    RatingBar.builder(
-                      initialRating: AppCubit.get(context).userModel.rate.toDouble(),
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {
-                        AppCubit.get(context).updateUser(
-                            name: AppCubit.get(context).userModel.name,
-                            bio: AppCubit.get(context).userModel.bio,
-                            phone: AppCubit.get(context).userModel.phone,
-                          rate: rating
-                        );
-                      },
-                    )
-                  ],
-                ),
-                SizedBox(height: 5.0,),
               ],
             ),
         );

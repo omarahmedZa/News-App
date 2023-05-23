@@ -53,11 +53,11 @@ class HomeLayout extends StatelessWidget {
               },
               child: Scaffold(
                 appBar: !cubit.isComment ? AppBar(
-                  title: Text('NewsApp'),
-                  titleTextStyle: GoogleFonts.lobster().copyWith(
-                      fontSize: 30,
-                      color: silverColor
-                  ),
+                  title: Text('News App'),
+                  // titleTextStyle: GoogleFonts.lobster().copyWith(
+                  //     fontSize: 30,
+                  //     color: silverColor
+                  // ),
                   actions:
                   [
                     if(cubit.currentIndex == 0 || cubit.currentIndex == 1)
